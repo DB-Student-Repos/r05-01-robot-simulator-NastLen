@@ -9,38 +9,67 @@ pub enum Direction {
     West,
 }
 
-pub struct Robot;
+pub struct Robot {
+    x: i32,
+    y: i32,
+    direction: Direction,
+}
 
 impl Robot {
     pub fn new(x: i32, y: i32, d: Direction) -> Self {
-        unimplemented!("Create a robot at (x, y) ({x}, {y}) facing {d:?}")
+        Robot {x, y, direction: d}
+
     }
 
     #[must_use]
     pub fn turn_right(self) -> Self {
-        unimplemented!()
+        match self.direction {
+            Direction::North => Self { direction: Direction::East, ..self },
+            Direction::East => Self { direction: Direction::South, ..self },
+            Direction::South => Self { direction: Direction::West, ..self },
+            Direction::West => Self { direction: Direction::North, ..self },
+        }
     }
 
     #[must_use]
     pub fn turn_left(self) -> Self {
-        unimplemented!()
+        match self.direction {
+            Direction::North => Self { direction: Direction::West, ..self },
+            Direction::West => Self { direction: Direction::South, ..self },
+            Direction::South => Self { direction: Direction::East, ..self },
+            Direction::East => Self { direction: Direction::North, ..self },
+        }
     }
 
     #[must_use]
     pub fn advance(self) -> Self {
-        unimplemented!()
+        match self.direction {
+            Direction::North => Self { y: self.y + 1, ..self },
+            Direction::East => Self { x: self.x + 1, ..self },
+            Direction::South => Self { y: self.y - 1, ..self },
+            Direction::West => Self { x: self.x - 1, ..self },
+        }
     }
 
     #[must_use]
     pub fn instructions(self, instructions: &str) -> Self {
-        unimplemented!("Follow the given sequence of instructions: {instructions}")
+        // unimplemented!("Follow the given sequence of instructions: {instructions}")
+        instructions.chars().fold(self, |robot, instruction| { // .chars() creates an iterator that goes through each character in the string
+            // .fold() is a method that applies a function to each element of an iterator, passing the result of the previous iteration to the next iteration
+            match instruction {
+                'R' => robot.turn_right(),
+                'A' => robot.advance(),
+                'L' => robot.turn_left(),
+                _ => robot,
+            }
+        })
     }
 
     pub fn position(&self) -> (i32, i32) {
-        unimplemented!()
+        (self.x, self.y)
     }
 
     pub fn direction(&self) -> &Direction {
-        unimplemented!()
+        &self.direction
     }
 }

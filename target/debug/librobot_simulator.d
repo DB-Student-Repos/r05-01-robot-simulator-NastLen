@@ -1,0 +1,1 @@
+/Users/stacy/Desktop/THD/Semester02/RustExcercises/r05-01-robot-simulator-NastLen/target/debug/librobot_simulator.rlib: /Users/stacy/Desktop/THD/Semester02/RustExcercises/r05-01-robot-simulator-NastLen/src/lib.rs
